@@ -35,7 +35,9 @@ def fetch_records(url, params, amount_kw, items_kw, headers=None):
         page_payload = page_response.json()
         yield from page_payload[items_kw]
         if page_payload.get('pages'):
-            if page >= page_payload['pages'] or page >= 99:
+            if page >= page_payload['pages'] or page >= 99:  # number of records per page - 20,
+                                                             # hh maximum allows you to dowload out 2000 records
+                                                             # that's why "page >= 99"
                 yield page_payload[amount_kw]
         if page_payload.get('more') == False:  # Cannot write "if not page_payload.get('more')", cause
             # "not None = True" but "None != False"
