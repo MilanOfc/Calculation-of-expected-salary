@@ -22,7 +22,7 @@
     git clone https://github.com/MilanOfc/Calculation-of-expected-salary.git
     cd ./Calculation-of-expected-salary
 
-Установите необходимые зависимости
+Установите необходимые зависимости.
 
     pip install -r requirements.txt
 
@@ -30,9 +30,11 @@
 
     echo SUPERJOB_KEY='%Ваш_Токен%' >> .env
 
-Запустите скрипт
+Запустите скрипт.
 
     python3 main.py
 
 ## Результат работы скрипта
+![image](https://github.com/MilanOfc/Calculation-of-expected-salary/assets/122183166/947530c8-ba45-4ef8-99c9-fb7af61d841e)
+
 
