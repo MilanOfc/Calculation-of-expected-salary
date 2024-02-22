@@ -47,10 +47,10 @@ def fetch_records_HH(url, params):
         page_response = requests.get(url, params=params)
         page_response.raise_for_status()
         page_payload = page_response.json()
+        print(page_payload['pages'])
+        print(page)
         yield from page_payload['items']
-        if page >= page_payload['pages'] or page >= 99:  # number of records per page - 20,
-            # hh maximum allows you to download out 2000 records
-            # that's why "page >= 99"
+        if page >= page_payload['pages'] - 1:  # - 1 because counting starts from 0
             yield page_payload['found']
 
 
