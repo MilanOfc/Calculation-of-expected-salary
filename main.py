@@ -132,7 +132,7 @@ def make_table(vacancies_statistics, platform_name):
                            lang_statistics["vacancies_found"],
                            lang_statistics["vacancies_processed"],
                            lang_statistics["average_salary"],
-                           ])
+        ])
     return AsciiTable(table_data, title).table
 
 
