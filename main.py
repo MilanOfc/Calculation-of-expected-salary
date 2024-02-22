@@ -73,7 +73,8 @@ def predict_rub_salary_sj(vacancy):
         return predict_salary(vacancy['payment_from'], vacancy['payment_to']) or None
 
 
-def make_stat_per_lang_for_hh(params, salary_func):
+def make_stat_per_lang_for_hh(params):
+    salary_func = predict_rub_salary_hh
     url = HH_URL
     vacancies_stats_per_lang = {}
     for lang_name in LANG_NAMES:
@@ -98,7 +99,8 @@ def make_stat_per_lang_for_hh(params, salary_func):
     return vacancies_stats_per_lang
 
 
-def make_stat_per_lang_for_sj(headers, params, salary_func):
+def make_stat_per_lang_for_sj(headers, params):
+    salary_func = predict_rub_salary_sj
     url = SJ_URL
     vacancies_stats_per_lang = {}
     for lang_name in LANG_NAMES:
@@ -142,11 +144,9 @@ if __name__ == '__main__':
     sj_arguments = {
         'headers': sj_headers,
         'params': {'town': SJ_MOSCOW_ID, 'catalogues': SJ_INDUSTRY_ID},
-        'salary_func': predict_rub_salary_sj,
     }
     hh_arguments = {
         'params': {'text': True, 'area': HH_MOSCOW_ID, 'period': HH_DAYS_PERIOD},
-        'salary_func': predict_rub_salary_hh,
     }
 
     sj_stats = make_stat_per_lang_for_sj(**sj_arguments)
