@@ -47,8 +47,6 @@ def fetch_records_HH(url, params):
         page_response = requests.get(url, params=params)
         page_response.raise_for_status()
         page_payload = page_response.json()
-        print(page_payload['pages'])
-        print(page)
         yield from page_payload['items']
         if page >= page_payload['pages'] - 1:  # - 1 because counting starts from 0
             yield page_payload['found']
@@ -74,17 +72,15 @@ def predict_rub_salary_sj(vacancy):
 
 
 def make_stat_per_lang_for_hh(params):
-    salary_func = predict_rub_salary_hh
-    url = HH_URL
     vacancies_stats_per_lang = {}
     for lang_name in LANG_NAMES:
         salaries = []
         params['text'] = f"программист {lang_name}"
-        for vacancy in fetch_records_HH(url, params):
+        for vacancy in fetch_records_HH(HH_URL, params):
             if isinstance(vacancy, int):
                 amount_of_vacancies = vacancy
                 break
-            salaries.append(salary_func(vacancy))
+            salaries.append(predict_rub_salary_sj(vacancy))
         salaries = [salary for salary in salaries if salary]
         vacancies_stats_for_lang = {
             "vacancies_found": amount_of_vacancies,
@@ -100,17 +96,15 @@ def make_stat_per_lang_for_hh(params):
 
 
 def make_stat_per_lang_for_sj(headers, params):
-    salary_func = predict_rub_salary_sj
-    url = SJ_URL
     vacancies_stats_per_lang = {}
     for lang_name in LANG_NAMES:
         salaries = []
         params['keyword'] = lang_name
-        for vacancy in fetch_records_SJ(url, params, headers):
+        for vacancy in fetch_records_SJ(SJ_URL, params, headers):
             if isinstance(vacancy, int):
                 amount_of_vacancies = vacancy
                 break
-            salaries.append(salary_func(vacancy))
+            salaries.append(predict_rub_salary_sj(vacancy))
         salaries = [salary for salary in salaries if salary]
         vacancies_stats_for_lang = {
             "vacancies_found": amount_of_vacancies,
